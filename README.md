@@ -9,7 +9,7 @@
 </div>
 
 ## About
-An FTP connection is a network programming protocol that serves as a digital mode of transportation to gets you from point A to point B.  Think of `airport.bio` as an airport that lets you (the user) catch a flight (i.e., connect) to any biological database in the world from one centralized location. 
+An FTP connection is a network programming protocol that serves as a digital mode of transportation to get you from point A to point B.  Think of `airport.bio` as an airport that lets you (the user) catch a flight (i.e., connect) to any biological database in the world from one centralized location. 
 
 ## Citation
 Coming soon!
