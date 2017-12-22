@@ -89,7 +89,8 @@ def search_result(request, page=1):
                              'error': error,
                              'founded_results': founded_results,
                              'user': request.user,
-                             'page_range': page_range})
+                             'page_range': page_range,
+                             'selected_len': True})
     else:
         html = render_to_string('SearchEngine/page_format.html',
                             {'all_results': results,
