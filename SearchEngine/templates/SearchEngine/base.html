@@ -25,8 +25,10 @@
             <a href="{% url 'login' %}" class="top-menu"><span class="glyphicon glyphicon-lock"></span></a>
         {% endif %}
         <h1><a href="/">Airport.bio</a></h1>
-    </div>
-    <img id="header_image" src="{% static 'img/airport-logo.jpg' %}">
+    </div> 
+    {% if show_image %}
+        <img id="header_image" src="{% static 'img/airport-logo.jpg' %}">
+    {% endif %}
     <div class="content container">
         <div class="row">
             <div class="col-md-offset-2">
