@@ -90,7 +90,8 @@ def search_result(request, page=1):
                              'founded_results': founded_results,
                              'user': request.user,
                              'page_range': page_range,
-                             'selected_len': True})
+                             'selected_len': True,
+                             'show_image': False})
     else:
         html = render_to_string('SearchEngine/page_format.html',
                             {'all_results': results,
@@ -98,7 +99,8 @@ def search_result(request, page=1):
                              'founded_results': founded_results,
                              'user': request.user,
                              'page_range': page_range,
-                             'selected_len': len(selected)})
+                             'selected_len': len(selected),
+                             'show_image': False})
         return HttpResponse(json.dumps({'html': html}), content_type="application/json")
 
 @login_required()
@@ -122,7 +124,8 @@ def recom_redirect(request, keyword):
                              'founded_results': founded_results,
                              'user': request.user,
                              'page_range': page_range,
-                             'selected_len': len(selected)})
+                             'selected_len': len(selected),
+                             'show_image': False})
 
 @csrf_exempt
 @login_required()
@@ -141,4 +144,5 @@ def search(request):
                   {'search_form': search_form,
                    'servers': servers,
                    'user': request.user,
-                   'recommended_words': recomwords})
+                   'recommended_words': recomwords,
+                   'show_image':True})
