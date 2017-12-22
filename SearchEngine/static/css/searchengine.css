@@ -1,5 +1,5 @@
 .page-header {
-    background-color: #800000;
+    background-color: #00495f;
     margin-top: 0;
     padding: 20px 20px 20px 40px;
 }
@@ -11,9 +11,7 @@
 }
 
 #header_image {
-    height:45px;
-    width:78px;
-    margin: -90px 0px 0px 180px;
+    margin: 0px 0px -350px 700px;
 }
 
 .recommendations {
