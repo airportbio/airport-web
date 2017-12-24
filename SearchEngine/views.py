@@ -128,15 +128,14 @@ def recom_redirect(request, keyword):
                              'show_image': False})
 
 @csrf_exempt
-@login_required()
 def search(request):
     search_form = SearchForm()
     servers = ServerName.objects.all()
-    queryset = Recommendation.objects.filter(user=request.user)
 
     try:
+        queryset = Recommendation.objects.filter(user=request.user)
         recom_model = queryset[0]
-    except IndexError:
+    except (IndexError, TypeError):
         recomwords = []
     else:
         recomwords = Counter(recom_model.recommendations).most_common(7)
