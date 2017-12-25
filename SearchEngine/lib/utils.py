@@ -55,7 +55,11 @@ class FindSearchResult:
         wordnet_result = self.get_similars()
         all_words = wordnet_result['words'] & wordnet_result['similars']
         all_words = all_words.union(self.splitted_substrings)
-        self.add_recommendations(all_words)
+        try:
+            self.add_recommendations(all_words)
+        except TypeError:
+            # user is anonymouse
+            pass
         for name, url in self.selected_servers.items():
             cond1 = Q(server_name=name)
             # these conditions take too long
