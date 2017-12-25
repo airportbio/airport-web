@@ -59,10 +59,13 @@ def search_result(request, page=1):
     else:
         selected = json.loads(request.POST.get('selected'))
         # csrftoken = request.POST.get('csrfmiddlewaretoken')
-        search_model = SearchQuery()
-        search_model.user = request.user
-        search_model.add(word=keyword, servers=list(selected))
-
+        try:
+            search_model = SearchQuery()
+            search_model.user = request.user
+            search_model.add(word=keyword, servers=list(selected))
+        except ValueError:
+            # user is not authenticated
+            pass
         searcher = FindSearchResult(keyword=keyword, servers=selected, user=request.user)
         try:
             all_result = list(searcher.find_result())
