@@ -14,9 +14,22 @@
     margin: 0px 0px -350px 700px;
 }
 
+.suggest_server{
+    margin: 0 0 0 0;
+}
+
+.left-elements{
+
+    float: right;
+}
 .menu-bar {
-    float: right !important;
-    margin: 70px 0px 0 0;
+    margin-top: 50px;
+}
+.top-menu {
+    font-family: 'Spectral', serif;
+    color: #ffffff;
+    font-size: 10pt;
+    margin-right: 10px;
 }
 .recommendations {
     margin-top: 60px;
@@ -43,15 +56,6 @@ h1, h2, h3, h4 {
 
 .post-form textarea, .post-form input {
     width: 100%;
-}
-
-.top-menu, .top-menu:hover, .top-menu:visited {
-    font-family: 'Spectral', serif;
-    color: #ffffff;
-    float: right;
-    font-size: 10pt;
-    margin-right: 10px;
-    margin-bottom: 70px;
 }
 
 .post {
