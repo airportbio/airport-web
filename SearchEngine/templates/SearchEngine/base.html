@@ -20,8 +20,12 @@
     </head>
     <body>
     <div class="page-header">
+        <div class = 'left-elements'>
         {% if user.is_authenticated %}
-            <p class="top-menu"><b>{{ user.username }}</b> <<a href="{% url 'logout' %}">Log out</a>></p>
+            <div class='top-menu'>    
+            <b>{{ user.username }}</b>
+                <<a href="{% url 'logout' %}">Log out</a>>
+            </div>
         {% else %}
             <a href="{% url 'login' %}" class="top-menu">
                 <span class="glyphicon glyphicon-lock" title="login/signup for more functionalities"></span></a>
@@ -34,6 +38,7 @@
             data-show-count="true"
             aria-label="Star airportbio on GitHub">Star</a>
         </div>
+    </div>
         <h1><a href="/">Airport.bio</a></h1>
     </div> 
     {% if show_image %}
