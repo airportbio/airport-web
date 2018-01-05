@@ -8,6 +8,9 @@
     		<option value={{name.path}} title={{name.path}}>{{name}}</option>
     	{% endfor %}
     </form>
+    <div class="suggest_server">
+        <a href="{% url 'suggest_server' %}">Suggest new server</a>
+    </div>
     <h1>Enter your Keyword here</h1>
     <div class="post-form" >
         {{ search_form.as_p }}
