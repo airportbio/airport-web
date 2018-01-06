@@ -1,0 +1,8 @@
+{% extends 'SearchEngine/base.html' %}
+{% block content %}
+
+<h2> Thanks for the participation.</h2>
+Your suggested server will be reviewed as soon as possible! ;)
+<p>You can back to the <a href="{% url 'home' %}"> search page
+    </a> or suggest <a href="{% url 'suggest_server' %}"> another server</a>.</p>
+{% endblock %}
