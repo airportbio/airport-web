@@ -23,3 +23,11 @@ class SelectServer(forms.Form):
         super(SelectServer, self).__init__(*args, **kwargs)
         self.fields['servers'].choices = [(x.path, x.name) for x in ServerName.objects.all()]
         self.fields['servers'].widget.attrs['class'] = "dropdown show"
+
+class SuggestServer(forms.Form):
+    name = forms.CharField(label='Server name', max_length=200)
+    url = forms.CharField(label='Server URL', max_length=300)
+    metadata_link = forms.CharField(label='Metadata link', max_length=300)
+    extra_information = forms.CharField(label='Extrat information',
+                                        widget=forms.Textarea,
+                                        )
