@@ -13,7 +13,7 @@ from .forms import SearchForm
 from itertools import islice
 from collections import Counter
 import json
-
+from datetime import datetime
 
 def home(request):
     recommendations = Recommendation.objects.all()
@@ -68,7 +68,9 @@ def search_result(request, page=1):
             pass
         searcher = FindSearchResult(keyword=keyword, servers=selected, user=request.user)
         try:
-            all_result = list(searcher.find_result())
+            start_time = datetime.now()
+            all_result = searcher.find_result()
+            print("execution time -- > {} ".format(datetime.now() - start_time))
             paginator = Paginator(all_result, 20)
             results = paginator.page(1)
             # cache.set('search_result', all_result, None)
