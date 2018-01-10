@@ -8,7 +8,7 @@ from string import punctuation, whitespace
 from collections import defaultdict
 # from django.contrib.postgres.search import TrigramSimilarity, TrigramDistance
 import re
-syspath.append(ospath.join(ospath.expanduser("~"), 'PubData'))
+syspath.append(ospath.join(ospath.expanduser("~"), 'airport-web'))
 from SearchEngine.models import Server, WordNet, Path, Recommendation
 
 
@@ -23,7 +23,7 @@ class FindSearchResult:
         obj, _ = Recommendation.objects.get_or_create(
             defaults={'recommendations': {}, 'user':self.user},
             user=self.user
-                                                      )
+            )
         recoms = defaultdict(int, obj.recommendations)
         for word in words:
             recoms[word] += 1
@@ -60,29 +60,26 @@ class FindSearchResult:
         except TypeError:
             # user is anonymouse
             pass
-        for name, url in self.selected_servers.items():
-            cond1 = Q(server_name=name)
-            # these conditions take too long
-            # cond2 = Q(files__overlap=all_words)
-            # cond3 = Q(path__icontains=all_words)
-            query_result = Path.objects.filter(cond1)  # & (cond2 | cond3))
-            for obj in query_result:
-                if self.check_intersection(obj.files, obj.keywords, obj.path, all_words):
-                    yield {'path': obj.path,
-                           'metadata': obj.metadata,
-                           'name': name,
-                           'url': url,
-                           'exact_match':self.exact_match(obj.files, obj.path) }
+
+        return [{'path': obj.path,
+                     'metadata': obj.metadata,
+                     'name': name,
+                     'url': url,
+                     'exact_match':self.exact_match(obj.files, obj.path)}
+                     for name, url in self.selected_servers.items()
+                for obj in Path.objects.filter(Q(server_name=name))
+                if self.check_intersection(obj.files, obj.keywords, obj.path, all_words)
+        ]
 
     
     def exact_match(self, files, path):
-        return any(i in files or i in path for i in self.splitted_substrings)
+        return any((i in files) or (i in path) for i in self.splitted_substrings)
     
     def check_intersection(self, files, keywords, path, all_words):
         # this should be done in json files
         return all_words.intersection(files) or any(i in path for i in all_words) or\
     all_words.intersection(keywords)
-    
+
     def get_similars(self):
         cond1 = Q(similars__overlap=self.splitted_substrings)
         cond2 = Q(word__in=self.splitted_substrings)
