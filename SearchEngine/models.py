@@ -76,3 +76,13 @@ class Recommendation(models.Model):
 
     def __str__(self):
         return str(self.user)
+
+class SuggestedServers(models.Model):
+    name = models.CharField(max_length=200)
+    url = models.CharField(max_length=300)
+    metadata_link = models.CharField(max_length=300)
+    extra_information = models.TextField()
+    approved = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.name

@@ -1,0 +1,11 @@
+{% extends 'SearchEngine/base.html' %}
+{% block content %}
+
+<h1>Suggest server</h1>
+<form class="post-form" action="POST">
+    {{ form.as_p }}
+    <button id="submit" class="save btn btn-default" 
+     type="submit" value="inputdata">Submit</button>
+</form>
+
+{% endblock %}

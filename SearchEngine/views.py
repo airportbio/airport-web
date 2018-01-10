@@ -8,8 +8,8 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.views.decorators.csrf import csrf_exempt
 from django.core.cache import cache
 from SearchEngine.lib.utils import FindSearchResult
-from .models import SearchQuery, Recommendation, ServerName
-from .forms import SearchForm
+from .models import SearchQuery, Recommendation, ServerName, SuggestedServers
+from .forms import SearchForm, SuggestServer
 from itertools import islice
 from collections import Counter
 import json
@@ -108,7 +108,7 @@ def search_result(request, page=1):
                              'show_image': False})
         return HttpResponse(json.dumps({'html': html}), content_type="application/json")
 
-@login_required()
+@login_required
 def recom_redirect(request, keyword):
     servers = ServerName.objects.all()
     selected = {s.name: s.path for s in servers}
@@ -150,3 +150,34 @@ def search(request):
                    'user': request.user,
                    'recommended_words': recomwords,
                    'show_image':True})
+
+@csrf_exempt
+@login_required
+def suggest_server(request):
+    if request.GET.get('name'):
+        form = SuggestServer(request.GET)
+        if form.is_valid():
+            name = form.cleaned_data['name']
+            url = form.cleaned_data['url']
+            metadata_link = form.cleaned_data['metadata_link']
+            info = form.cleaned_data['extra_information']
+            model = SuggestedServers()
+
+            model.name = name
+            model.url = url
+            model.metadata_link = metadata_link
+            model.extra_information = info
+
+            model.save()
+
+            return render(request, 'SearchEngine/thanks.html',
+                          {'user': request.user})
+
+    if request.method == 'GET':
+        suggestform = SuggestServer()
+        return render(request, 'SearchEngine/suggest_server.html',
+                    {'form': suggestform,
+                    'user': request.user
+                    })
+
+#def submit_suggestion(request):
