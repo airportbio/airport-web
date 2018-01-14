@@ -103,7 +103,7 @@ if __name__ == '__main__':
                       "GenBank",
                       "Sequence Read Archive"}
     initializer = Initializer(data_path='data/servernames.json',
-                              server_path='data/refined_json_files',
+                              server_path='data/refined_json_files/new',
                               wordnet_path='data/wordnet/dictionary_book/final_results',
                               metadata='data/metadata.json',
                               excluded_names=excluded_names)
