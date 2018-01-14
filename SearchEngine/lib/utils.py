@@ -62,23 +62,22 @@ class FindSearchResult:
             pass
 
         return [{'path': obj.path,
-                     'metadata': obj.metadata,
-                     'name': name,
-                     'url': url,
-                     'exact_match':self.exact_match(obj.files, obj.path)}
+                 'metadata': obj.metadata,
+                 'name': name,
+                 'url': url,
+                 'exact_match': self.exact_match(obj.files, obj.path)}
                      for name, url in self.selected_servers.items()
                 for obj in Path.objects.filter(Q(server_name=name))
-                if self.check_intersection(obj.files, obj.keywords, obj.path, all_words)
+                if all_words.intersection(obj.files+obj.keywords)
         ]
 
     
     def exact_match(self, files, path):
         return any((i in files) or (i in path) for i in self.splitted_substrings)
     
-    def check_intersection(self, files, keywords, path, all_words):
+    def check_intersection(self, files_and_keywords, path, all_words):
         # this should be done in json files
-        return all_words.intersection(files) or any(i in path for i in all_words) or\
-    all_words.intersection(keywords)
+        return all_words.intersection(files_and_keywords)
 
     def get_similars(self):
         cond1 = Q(similars__overlap=self.splitted_substrings)
