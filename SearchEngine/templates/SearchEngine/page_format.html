@@ -2,7 +2,7 @@
 {% block content %}
 <p> <b>{{ founded_results }} results founded</b> </p>
 {% if not selected_len %}
- <p style="color:red"> <b> NO SERVER IS SELECTED! </b> </p>
+ <p style="color:red"> <b> NO SERVER IS SELECTED! {{ selected_len }}</b> </p>
 
 {% else %}
 <table class="table table-bordered">
@@ -15,7 +15,7 @@
       </tr>
     </thead>
     <tbody>
-      {% for record in all_results %}
+      {% for record in page %}
         <tr>
           {% if record.exact_match %}
               <td><a href= 'ftp://{{ record.url }}{{ record.path }}' 
@@ -32,23 +32,23 @@
     </tbody>
   </table>
   
-  {% if all_results.has_other_pages %}
+  {% if is_other_pages %}
     <ul class="pagination">
-      {% if all_results.has_previous %}
-        <li><a href="/search_result/?page={{ all_results.previous_page_number }}"
+      {% if page.has_previous %}
+        <li><a href="/search_result/?page={{ page.previous_page_number }}"
           onclick="return chagne_page()" id="change_page_id">&laquo;</a></li>
       {% else %}
         <li class="disabled"><span>&laquo;</span></li>
       {% endif %}
-      {% for i in page_range %}
-        {% if all_results.number == i %}
+      {% for i in page.page_range %}
+        {% if page.number == i %}
           <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
         {% else %}
           <li><a href="/search_result/?page={{ i }}" onclick="return chagne_page()" id="change_page_id">{{ i }}</a></li>
         {% endif %}
       {% endfor %}
-      {% if all_results.has_next %}
-        <li><a href="/search_result/?page={{ all_results.next_page_number }}"
+      {% if page.has_next %}
+        <li><a href="/search_result/?page={{ page.next_page_number }}"
           onclick="return chagne_page()" id="change_page_id">&raquo;</a></li>
       {% else %}
         <li class="disabled"><span>&raquo;</span></li>
