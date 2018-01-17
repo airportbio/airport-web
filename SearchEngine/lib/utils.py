@@ -10,7 +10,7 @@ from collections import defaultdict
 import re
 syspath.append(ospath.join(ospath.expanduser("~"), 'airport-web'))
 from SearchEngine.models import Server, WordNet, Path, Recommendation
-
+from itertools import count, tee
 
 class FindSearchResult:
     def __init__(self, *args, **kwargs):
@@ -61,15 +61,15 @@ class FindSearchResult:
             # user is anonymouse
             pass
 
-        return [{'path': obj.path,
-                 'metadata': obj.metadata,
-                 'name': name,
-                 'url': url,
-                 'exact_match': self.exact_match(obj.files, obj.path)}
-                     for name, url in self.selected_servers.items()
-                for obj in Path.objects.filter(Q(server_name=name))
-                if all_words.intersection(obj.files+obj.keywords)
-        ]
+
+        for name, url in self.selected_servers.items(): 
+            for obj in Path.objects.filter(server_name=name):
+                if all_words.intersection(obj.keywords):
+                    yield {'path': obj.path,
+                           'metadata': obj.metadata,
+                           'name': name,
+                           'url': url,
+                           'exact_match': self.exact_match(obj.files, obj.path)}
 
     
     def exact_match(self, files, path):
@@ -86,3 +86,92 @@ class FindSearchResult:
         words = {obj.word for obj in all_obj}
         similars = {i for obj in all_obj for i in obj.similars}
         return {'words': words, 'similars': similars}
+
+
+class Paginator:
+    def __init__(self, *args, **kwargs):
+        self.results = args[0]
+        self.rows_number = kwargs['rows_number']
+        self.range_frame = kwargs['range_frame']
+        self.counter = count(1)
+        self.cache = {}
+        self.current = self.create_page()
+
+    def create_page(self, number=False):
+        if not number:
+            number = next(self.counter)
+        items = [next(self.results, None) for _ in range(self.rows_number)]
+        page = Page(items=items,
+                    number=number,
+                    range_frame=self.range_frame)
+        self.cache[number] = page
+        return page
+    
+    def __next__(self):
+        number = next(self.counter)
+        try:
+            items = self.cache[number]
+        except KeyError:
+            items = [next(self.results, None) for _ in range(20)]
+        finally:
+            if items[0] is None:
+                return None
+            page = Page(items=items,
+                        number=number,
+                        range_frame=self.range_frame)
+            self.cache[number] = page
+            return page
+
+    def __iter__(self):
+        return self
+    
+    def __getitem__(self, index):
+        try:
+            page = self.cache[index]
+        except KeyError:
+            page = self.create_page(index)
+        finally:
+            self.current = page
+            return page
+            
+
+    def has_other_pages(self):
+        try:
+            return self.current.last_item is not None
+        except IndexError:
+            return True
+
+
+
+class Page:
+    def __init__(self, *args, **kwargs):
+        self.number = kwargs['number']
+        self.range_frame = kwargs['range_frame']
+        _items = kwargs['items']
+        self.last_item = _items[-1]
+        self.items = iter(_items)
+        self.previous_page_number = self.number - self.range_frame
+        self.next_page_number = self.number + self.range_frame
+
+    def __next__(self):
+        return next(self.items)
+
+    def __iter__(self):
+        return self
+    
+    def has_previous(self):
+        return self.number != 1
+
+    def has_next(self):
+        try:
+            return self.last_item is not None
+        except IndexError:
+            return True
+
+    def page_range(self):
+        lower = max(self.number - self.range_frame, 1)
+        # for a more precise result we should always cache
+        # pages within the range_frame so that we can easily
+        # detect wheter there are any upper pages or not 
+        upper = lower + (2*self.range_frame + 2)
+        return range(lower, upper)
