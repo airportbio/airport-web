@@ -5,7 +5,7 @@ from django.utils import timezone
 
 
 class SearchQuery(models.Model):
-    user = models.ForeignKey('auth.User')
+    user = models.ForeignKey('auth.User', on_delete=models.CASCADE)
     word = models.CharField(max_length=100)
     servers = ArrayField(models.CharField(max_length=100, blank=True))
     search_date = models.DateTimeField(default=timezone.now)
@@ -71,7 +71,7 @@ class WordNet(models.Model):
 
 
 class Recommendation(models.Model):
-    user = models.OneToOneField('auth.User')
+    user = models.OneToOneField('auth.User', on_delete=models.CASCADE)
     recommendations = JSONField()
 
     def __str__(self):
