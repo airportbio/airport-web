@@ -6,7 +6,7 @@ import glob
 import re
 from string import punctuation
 from django.db import transaction
-syspath.append(ospath.join(ospath.expanduser("~"), 'Airportbio'))
+syspath.append(ospath.join(ospath.expanduser("~"), 'Desktop/airport-web'))
 environ.setdefault("DJANGO_SETTINGS_MODULE", "Airport.settings")
 setup()
 from SearchEngine.models import ServerName, WordNet, Server, Path
@@ -103,7 +103,7 @@ if __name__ == '__main__':
                       "GenBank",
                       "Sequence Read Archive"}
     initializer = Initializer(data_path='data/servernames.json',
-                              server_path='data/refined_json_files/new',
+                              server_path='data/refined_json_files',
                               wordnet_path='data/wordnet/dictionary_book/final_results',
                               metadata='data/metadata.json',
                               excluded_names=excluded_names)
