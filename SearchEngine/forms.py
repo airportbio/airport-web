@@ -29,7 +29,7 @@ class SearchForm(forms.ModelForm):
     class Meta:
         model = SearchQuery
         fields = ('word',)
-        widgets = {'word': forms.TextInput(attrs={'placeholder': "search for data",
+        widgets = {'word': forms.TextInput(attrs={'placeholder': "search for data (e.g. chip-seq, protein, dna-seq)",
         		  								  'class': 'form-control',},),}
         labels = {
         "word": ""
