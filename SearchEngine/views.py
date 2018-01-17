@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, authenticate
-from django.contrib.auth.forms import UserCreationForm
+# from django.contrib.auth.forms import UserCreationForm
 from django.template.loader import render_to_string
 from django.http import HttpResponse, StreamingHttpResponse
 from django.template import Context, Template
@@ -9,7 +9,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.core.cache import cache
 from SearchEngine.lib.utils import FindSearchResult, Paginator
 from .models import SearchQuery, Recommendation, ServerName, SuggestedServers
-from .forms import SearchForm, SuggestServer
+from .forms import SearchForm, SuggestServer, CaptchaUserCreateForm
 from itertools import islice
 from collections import Counter
 import json
@@ -27,16 +27,18 @@ def user_profile(request):
 
 def signup_view(request):
     if request.method == 'POST':
-        form = UserCreationForm(request.POST)
+        form = CaptchaUserCreateForm(request.POST)
         if form.is_valid():
             form.save()
             username = form.cleaned_data.get('username')
             raw_password = form.cleaned_data.get('password1')
+            captcha = form.cleaned_data.get('captcha')
+            print(captcha)
             user = authenticate(username=username, password=raw_password)
             login(request, user)
             return redirect('/')
     else:
-        form = UserCreationForm()
+        form = CaptchaUserCreateForm()
     return render(request, 'registration/signup.html', {'form': form})
 
 
