@@ -1,19 +1,24 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth import login, authenticate
+from django.contrib.auth import authenticate
 # from django.contrib.auth.forms import UserCreationForm
 from django.template.loader import render_to_string
 from django.http import HttpResponse, StreamingHttpResponse
 from django.template import Context, Template
 from django.views.decorators.csrf import csrf_exempt
 from django.core.cache import cache
+from django.conf import settings
 from SearchEngine.lib.utils import FindSearchResult, Paginator
 from .models import SearchQuery, Recommendation, ServerName, SuggestedServers
 from .forms import SearchForm, SuggestServer, CaptchaUserCreateForm
+from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.views import login as authlogin
 from itertools import islice
 from collections import Counter
 import json
 from datetime import datetime
+import requests
+
 
 
 def home(request):
@@ -24,19 +29,54 @@ def home(request):
 def user_profile(request):
     pass
 
+def get_client_ip(request):
+    x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+    if x_forwarded_for:
+        ip = x_forwarded_for.split(',')[0]
+    else:
+        ip = request.META.get('REMOTE_ADDR')
+    return ip
+
+def verify_captcha(data, request):
+    captcha_rs = data.get('g-recaptcha-response')
+    #captcha = form.cleaned_data.get('captcha')
+    url = "https://www.google.com/recaptcha/api/siteverify"
+    params = {'secret': settings.RECAPTCHA_SECRET_KEY,
+                'response': captcha_rs,
+                'remoteip': get_client_ip(request)
+                }
+    verify_rs = requests.get(url, params=params, verify=True)
+    verify_rs = verify_rs.json()
+    status = verify_rs.get("success", False)
+    return status
+
+def login(request):
+    if request.method == 'POST':
+        data = request.POST
+        status = verify_captcha(data, request)
+        print(status)
+        if status:
+            return authlogin(request)
+    return render(request,
+                  'registration/login.html',
+                  {'form': AuthenticationForm()})
+
 
 def signup_view(request):
+    print("view")
     if request.method == 'POST':
-        form = CaptchaUserCreateForm(request.POST)
+        data = request.POST
+        form = CaptchaUserCreateForm(data)
         if form.is_valid():
             form.save()
             username = form.cleaned_data.get('username')
             raw_password = form.cleaned_data.get('password1')
-            captcha = form.cleaned_data.get('captcha')
-            print(captcha)
-            user = authenticate(username=username, password=raw_password)
-            login(request, user)
-            return redirect('/')
+            status = verify_captcha(data, request)
+            print(status)
+            if status:
+                user = authenticate(username=username, password=raw_password)
+                authlogin(request, user)
+                return redirect('/')
     else:
         form = CaptchaUserCreateForm()
     return render(request, 'registration/signup.html', {'form': form})
