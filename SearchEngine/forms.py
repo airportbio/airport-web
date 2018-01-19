@@ -2,28 +2,14 @@ from django import forms
 from .models import SearchQuery, ServerName
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
-from captcha.fields import ReCaptchaField
 
-
-class CaptchaAuthenticationForm(AuthenticationForm):
-    captcha = ReCaptchaField(attrs={'theme' : 'clean',})
-    class Meta:
-        model = User
-        fields = ("username","password", "captcha")
 
 class CaptchaUserCreateForm(UserCreationForm):
-    captcha = ReCaptchaField(attrs={'theme' : 'clean',})
     email = forms.EmailField(label = "Email", required=True)
     class Meta(UserCreationForm.Meta):
         model = User
-        fields = ("username", "email", "password1", "password2", "captcha")
+        fields = ("username", "email", "password1", "password2")
 
-    def save(self, commit=True):
-        user = super(UserCreateForm, self).save(commit=False)
-        user.email = self.cleaned_data['email']
-        if commit:
-            user.save()
-        return user
 class SearchForm(forms.ModelForm):
 
     class Meta:
