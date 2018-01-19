@@ -17,14 +17,12 @@ from django.conf.urls import include, url
 from django.contrib import admin
 from SearchEngine import views as myviews
 from django.contrib.auth import views as auth_views
-from SearchEngine.forms import CaptchaAuthenticationForm
 # from functools import partial
 
 app_name = 'searchengine'
-urlpatterns = [url(r'^', include('SearchEngine.urls', namespace='searchengine')),
-               url(r'^accounts/login/$',auth_views.login,
-                   kwargs={'authentication_form':CaptchaAuthenticationForm},
-                   name='login'),
+urlpatterns = [
+    url(r'^', include('SearchEngine.urls', namespace='searchengine')),
+    url(r'^accounts/login/$', myviews.login, name='login'),
     url(r'^logout/', auth_views.logout, name='logout', kwargs={'next_page': '/'}),
     url(r'^$', myviews.home, name='home'),
     url(r'^admin/', admin.site.urls),
