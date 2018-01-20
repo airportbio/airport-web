@@ -36,6 +36,6 @@ class SuggestServer(forms.Form):
     name = forms.CharField(label='Server name', max_length=200)
     url = forms.CharField(label='Server URL', max_length=300)
     metadata_link = forms.CharField(label='Metadata link', max_length=300)
-    extra_information = forms.CharField(label='Extrat information',
+    extra_information = forms.CharField(label='Extra information',
                                         widget=forms.Textarea,
                                         )
