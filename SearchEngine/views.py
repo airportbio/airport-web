@@ -132,7 +132,7 @@ def search_result(request, page=1):
                                  'error': error,
                                  'founded_results': 'X',
                                  'user': request.user,
-                                 'selected_len': True,
+                                 'selected_len': len(selected),
                                  'show_image': False,
                                  'is_other_pages':all_result.has_other_pages()})
 
@@ -147,7 +147,7 @@ def search_result(request, page=1):
                         'error': False,
                         'founded_results': 'X',
                         'user': request.user,
-                        'selected_len': True,
+                        'selected_len': len(selected),
                         'show_image': False,
                         'is_other_pages':all_result.has_other_pages()})
 
