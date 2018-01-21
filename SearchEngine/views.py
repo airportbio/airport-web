@@ -1,10 +1,10 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, render_to_response
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate
 # from django.contrib.auth.forms import UserCreationForm
 from django.template.loader import render_to_string
 from django.http import HttpResponse, StreamingHttpResponse
-from django.template import Context, Template
+from django.template import Context, Template, RequestContext
 from django.views.decorators.csrf import csrf_exempt
 from django.core.cache import cache
 from django.conf import settings
@@ -102,6 +102,7 @@ def generate_template(all_result, error, user):
 @csrf_exempt
 def search_result(request, page=1):
     global all_result
+    global selected_length
     keyword = request.POST.get('keyword')
     if keyword is not None:
         selected = json.loads(request.POST.get('selected'))
@@ -123,16 +124,19 @@ def search_result(request, page=1):
         except ValueError as exc:
             # invalid keywords
             error = """INVALID KEYWORD:
-            Your keyword contains invalid notations!
-            {}""".format(exc)
-
+            Your keyword contains invalid notations!\n
+            Exception: {}""".format(exc)
+            all_result = Paginator(iter([]),
+                                   range_frame=2,
+                                   rows_number=20)
+        selected_length = len(selected)
         html = render_to_string('SearchEngine/page_format.html',
                                 {'all_results': all_result,
                                  'page': all_result[1],
                                  'error': error,
                                  'founded_results': 'X',
                                  'user': request.user,
-                                 'selected_len': len(selected),
+                                 'selected_len': selected_length,
                                  'show_image': False,
                                  'is_other_pages':all_result.has_other_pages()})
 
@@ -147,7 +151,7 @@ def search_result(request, page=1):
                         'error': False,
                         'founded_results': 'X',
                         'user': request.user,
-                        'selected_len': len(selected),
+                        'selected_len': selected_length,
                         'show_image': False,
                         'is_other_pages':all_result.has_other_pages()})
 
@@ -218,3 +222,14 @@ def suggest_server(request):
                     })
 
 #def submit_suggestion(request):
+
+def handler404(request):
+    response = render(request, '404.html', {},)
+    response.status_code = 404
+    return response
+
+
+def handler500(request):
+    response = render(request, '500.html', {},)
+    response.status_code = 500
+    return response

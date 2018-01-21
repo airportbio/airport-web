@@ -28,15 +28,17 @@ LOGIN_REDIRECT_URL = '/'
 SECRET_KEY = 'ii#y660j9opgmhlwbb)q&frtr&p!czvw_(-e*2zg!-6h!%@^li'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["127.0.0.1"]
 
 CSRF_USE_SESSIONS = True
 # Application definition
 
 RECAPTCHA_PUBLIC_KEY = '6LcqmEEUAAAAAKgF5MlC_-M_PMl_-5W2dWtLxPcS'
 RECAPTCHA_SECRET_KEY = '6LcqmEEUAAAAANnF8MK4phAFovhMKqnLB6dC28Gz'
+
+LOGGING_PATH = 'SearchEngine/logging_hub/airport.log'
 
 
 INSTALLED_APPS = [
@@ -58,6 +60,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'SearchEngine.middleware.Logger.LoggingMiddleware'
 ]
 
 ROOT_URLCONF = 'Airport.urls'
