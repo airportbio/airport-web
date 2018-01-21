@@ -124,8 +124,11 @@ def search_result(request, page=1):
         except ValueError as exc:
             # invalid keywords
             error = """INVALID KEYWORD:
-            Your keyword contains invalid notations!
-            {}""".format(exc)
+            Your keyword contains invalid notations!\n
+            Exception: {}""".format(exc)
+            all_result = Paginator(iter([]),
+                                   range_frame=2,
+                                   rows_number=20)
         selected_length = len(selected)
         html = render_to_string('SearchEngine/page_format.html',
                                 {'all_results': all_result,
