@@ -19,6 +19,8 @@ from SearchEngine import views as myviews
 from django.contrib.auth import views as auth_views
 # from functools import partial
 
+handler404 = 'SearchEngine.views.handler404'
+handler500 = 'SearchEngine.views.handler500'
 app_name = 'searchengine'
 urlpatterns = [
     url(r'^', include('SearchEngine.urls', namespace='searchengine')),
