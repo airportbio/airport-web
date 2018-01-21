@@ -35,6 +35,10 @@ ALLOWED_HOSTS = []
 CSRF_USE_SESSIONS = True
 # Application definition
 
+RECAPTCHA_PUBLIC_KEY = '6LcqmEEUAAAAAKgF5MlC_-M_PMl_-5W2dWtLxPcS'
+RECAPTCHA_SECRET_KEY = '6LcqmEEUAAAAANnF8MK4phAFovhMKqnLB6dC28Gz'
+
+
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -43,6 +47,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'SearchEngine',
+    'captcha'
 ]
 
 MIDDLEWARE = [
@@ -84,7 +89,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'airport',
         'USER': 'kasra',
-        'PASSWORD': 'kasra88',
+        'PASSWORD': 'mazdak88',
         'HOST': 'localhost',
         'PORT': '',
     }
