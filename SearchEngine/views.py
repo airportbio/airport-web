@@ -104,22 +104,28 @@ def search_result(request, page=1):
     global all_result
     global selected_length
     keyword = request.POST.get('keyword')
+    exact_only = request.POST.get('exact_only')
     if keyword is not None:
         selected = json.loads(request.POST.get('selected'))
         try:
             search_model = SearchQuery()
             search_model.user = request.user
-            search_model.add(word=keyword, servers=list(selected))
+            search_model.add(word=keyword,
+                             servers=list(selected),
+                             exact_only=exact_only)
         except ValueError:
             # user is not authenticated
             pass
-        searcher = FindSearchResult(keyword=keyword, servers=selected, user=request.user)
+        searcher = FindSearchResult(keyword=keyword,
+                                    servers=selected,
+                                    user=request.user,
+                                    exact_only=exact_only)
         try:
             error = False
             # start_time = datetime.now()
             all_result = Paginator(searcher.find_result(),
                                    range_frame=2,
-                                   rows_number=20)
+                                   rows_number=50)
             # print("execution time -- > {} ".format(datetime.now() - start_time))
         except ValueError as exc:
             # invalid keywords
@@ -128,7 +134,7 @@ def search_result(request, page=1):
             Exception: {}""".format(exc)
             all_result = Paginator(iter([]),
                                    range_frame=2,
-                                   rows_number=20)
+                                   rows_number=50)
         selected_length = len(selected)
         html = render_to_string('SearchEngine/page_format.html',
                                 {'all_results': all_result,
@@ -162,7 +168,7 @@ def recom_redirect(request, keyword):
     searcher = FindSearchResult(keyword=keyword, servers=selected, user=request.user)
     all_result = Paginator(searcher.find_result(),
                                    range_frame=2,
-                                   rows_number=20)
+                                   rows_number=50)
     return render(request, 
                   'SearchEngine/page_format.html',
                   {'all_results': all_result,
@@ -223,13 +229,13 @@ def suggest_server(request):
 
 #def submit_suggestion(request):
 
-def handler404(request):
+def handler404(request, exception=None):
     response = render(request, '404.html', {},)
     response.status_code = 404
     return response
 
 
-def handler500(request):
+def handler500(request, exception=None):
     response = render(request, '500.html', {},)
     response.status_code = 500
     return response
