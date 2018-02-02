@@ -12,10 +12,13 @@
         <a href="{% url 'suggest_server' %}">Suggest new server</a>
     </div>
     <h1>Enter your Keyword here</h1>
-    <div class="post-form" >
-        {{ search_form.as_p }}
-        <button id="submit_search" class="save btn btn-default" 
-        onclick="return search_result()" type="submit">Search</button>
+    {{ search_form.word }}
+    <br>
+    <button id="submit_search" class="save btn btn-default"
+    onclick="return search_result()" type="submit">Search</button>
+    <div class="material-switch pull-left">
+        <span class="exact_match">Only search for exact matches: &nbsp;</span> {{ search_form.exact_only }}
+        <label for="someSwitchOptionInfo" class="label-success"></label>
     </div>
     {% if user.is_authenticated %}
         <div class="recommendations">
