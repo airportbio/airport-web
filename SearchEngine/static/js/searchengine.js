@@ -39,6 +39,7 @@ function search_result() {
             selected[options[i].text] = options[i].value;
         }
     var search_query = document.getElementById('id_word').value;
+    var exact_only = $('#someSwitchOptionInfo').prop('checked');
     var search_query = search_query.replace(/\s/g, '_');
     var csrftoken = getCookie('csrftoken');
     $.ajax({
@@ -46,6 +47,7 @@ function search_result() {
         url : "search_result/" + search_query, // the endpoint
         type : "POST", // http method
         data : { 'keyword' : search_query,
+                 'exact_only': exact_only,
                  'selected': JSON.stringify(selected),
                  'csrfmiddlewaretoken': csrftoken }, // data sent with the post request
 
