@@ -17,6 +17,7 @@ class FindSearchResult:
         self.keyword = kwargs['keyword'].strip('-_')
         self.selected_servers = kwargs['servers']
         self.user = kwargs['user']
+        self.exact_only = kwargs['exact_only']
         self.splitted_substrings = []
 
     def add_recommendations(self, words):
@@ -52,15 +53,18 @@ class FindSearchResult:
         # query.objects.filter(name__in=selected_servers)
         if not self.validate_keyword():
             raise ValueError("Invalid Keyword")
-        wordnet_result = self.get_similars()
-        all_words = wordnet_result['words'] & wordnet_result['similars']
+        exact_only_flag = self.exact_only == 'true'
+        if exact_only_flag:
+            all_words = set()
+        else:
+            wordnet_result = self.get_similars()
+            all_words = wordnet_result['words'] & wordnet_result['similars']
         all_words = all_words.union(self.splitted_substrings)
         try:
             self.add_recommendations(all_words)
         except TypeError:
             # user is anonymouse
             pass
-
 
         for name, url in self.selected_servers.items(): 
             for obj in Path.objects.filter(server_name=name):
@@ -69,7 +73,7 @@ class FindSearchResult:
                            'metadata': obj.metadata,
                            'name': name,
                            'url': url,
-                           'exact_match': self.exact_match(obj.files, obj.path)}
+                           'exact_match': exact_only_flag or self.exact_match(obj.files, obj.path)}
 
     
     def exact_match(self, files, path):
@@ -110,16 +114,11 @@ class Paginator:
     def __next__(self):
         number = next(self.counter)
         try:
-            items = self.cache[number]
+            page = self.cache[number]
         except KeyError:
-            items = [next(self.results, None) for _ in range(20)]
+            print("create page {}".format(number))
+            page = self.create_page(number=number)
         finally:
-            if items[0] is None:
-                return None
-            page = Page(items=items,
-                        number=number,
-                        range_frame=self.range_frame)
-            self.cache[number] = page
             return page
 
     def __iter__(self):
@@ -130,6 +129,8 @@ class Paginator:
             page = self.cache[index]
         except KeyError:
             page = self.create_page(index)
+        else:
+            print("call from cache {}".format(index))
         finally:
             self.current = page
             return page
@@ -147,14 +148,20 @@ class Page:
     def __init__(self, *args, **kwargs):
         self.number = kwargs['number']
         self.range_frame = kwargs['range_frame']
-        _items = kwargs['items']
-        self.last_item = _items[-1]
-        self.items = iter(_items)
+        self.items = kwargs['items']
+        self.last_item = self.items[-1]
         self.previous_page_number = self.number - self.range_frame
         self.next_page_number = self.number + self.range_frame
+        self.index = 0
 
     def __next__(self):
-        return next(self.items)
+        try:
+            result = self.items[self.index]
+        except IndexError:
+            self.index = 0
+            raise StopIteration
+        self.index += 1
+        return result
 
     def __iter__(self):
         return self
