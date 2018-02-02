@@ -8,12 +8,14 @@ class SearchQuery(models.Model):
     user = models.ForeignKey('auth.User', on_delete=models.CASCADE)
     word = models.CharField(max_length=100)
     servers = ArrayField(models.CharField(max_length=100, blank=True))
+    exact_only = models.BooleanField(default=False)
     search_date = models.DateTimeField(default=timezone.now)
 
     def add(self, **kwargs):
         self.search_date = timezone.now()
         self.word = kwargs['word']
         self.servers = kwargs['servers']
+        self.exact_only = kwargs['exact_only']
         self.save()
 
     def __str__(self):
