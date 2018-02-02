@@ -14,11 +14,21 @@ class SearchForm(forms.ModelForm):
 
     class Meta:
         model = SearchQuery
-        fields = ('word',)
-        widgets = {'word': forms.TextInput(attrs={'placeholder': "search for data (e.g. chip-seq, protein, dna-seq)",
-        		  								  'class': 'form-control',},),}
+        fields = ('word','exact_only')
+        widgets = {'word': forms.TextInput(
+                        attrs={'placeholder': "search for data (e.g. chip-seq, protein, dna-seq)",
+        		               'class': 'form-control',
+                               'width': '100%'}
+                               ),
+                   'exact_only': forms.CheckboxInput(
+                        attrs={'id': "someSwitchOptionInfo",
+                               'name': "someSwitchOption001",
+                               'type': "checkbox"}
+                       ),
+                   }
         labels = {
-        "word": ""
+        "word": "",
+        "exact_only":"Only search for exact matches"
         }
 
 
