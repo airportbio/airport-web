@@ -112,7 +112,8 @@ def search_result(request, page=1):
             search_model.user = request.user
             search_model.add(word=keyword,
                              servers=list(selected),
-                             exact_only=exact_only)
+                             exact_only={'false':False,
+                                         'true':True}.get(exact_only, False))
         except ValueError:
             # user is not authenticated
             pass
@@ -239,3 +240,4 @@ def handler500(request, exception=None):
     response = render(request, '500.html', {},)
     response.status_code = 500
     return response
+  
