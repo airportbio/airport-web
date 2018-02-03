@@ -166,7 +166,10 @@ def search_result(request, page=1):
 def recom_redirect(request, keyword):
     servers = ServerName.objects.all()
     selected = {s.name: s.path for s in servers}
-    searcher = FindSearchResult(keyword=keyword, servers=selected, user=request.user)
+    searcher = FindSearchResult(keyword=keyword,
+                                servers=selected,
+                                user=request.user,
+                                exact_only='false')
     all_result = Paginator(searcher.find_result(),
                                    range_frame=2,
                                    rows_number=50)
