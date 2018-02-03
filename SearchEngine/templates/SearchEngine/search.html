@@ -1,15 +1,21 @@
 {% extends 'SearchEngine/base.html' %}
 {% block content %}
     <h1>Select server</h1>
-    <p class="select-all"><a href='#' id='select-all'>select all</a></p>
-	<p class="deselect-all"><a href='#' id='deselect-all'>deselect all</a></p>
+    <span class="select-all">
+        <span class="square"><a href='#' id='select-all' class="tenth before after">select all</a></span>
+    </span>
+    <span class="deselect-all">
+        <span class="square"><a href='#' id='deselect-all' class="tenth before after">deselect all</a></span>
+    </span>
+    <br>
+    <br>
     <form id='pre-selected-options' multiple='multiple'>{% csrf_token %}
     	{% for name in servers %}
     		<option value={{name.path}} title={{name.path}}>{{name}}</option>
     	{% endfor %}
     </form>
     <div class="suggest_server">
-        <a href="{% url 'suggest_server' %}">Suggest new server</a>
+        <span class="square"><a href="{% url 'suggest_server' %}" class="tenth before after">Suggest new server</a></span>
     </div>
     <h1>Enter your Keyword here</h1>
     {{ search_form.word }}
