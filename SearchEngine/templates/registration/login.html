@@ -7,17 +7,16 @@
 
     <form method="post" action="{% url 'login' %}">
     {% csrf_token %}
-        <table>
-        <tr>
-            <td>{{ form.username.label_tag }}</td>
-            <td>{{ form.username }}</td>
-        </tr>
-        <tr>
-            <td>{{ form.password.label_tag }}</td>
-            <td>{{ form.password }}</td>
-        </tr>
-        </table>
+        {{ form.username.label_tag }}
+        {{ form.username }}
+        <br>
+        <br>
+        {{ form.password.label_tag }}
+        {{ form.password }}
+        <br>
+        <br>
         <div class="g-recaptcha" data-sitekey="6LcqmEEUAAAAAKgF5MlC_-M_PMl_-5W2dWtLxPcS"></div>        
+        <br>
         <input type="submit" value="login" />
         <input type="hidden" name="next" value="{{ next }}" />
     </form>
