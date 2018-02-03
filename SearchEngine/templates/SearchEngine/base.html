@@ -6,6 +6,7 @@
         <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
         <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
         <link href="https://fonts.googleapis.com/css?family=IM+Fell+English+SC|Spectral" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Gloria+Hallelujah|VT323" rel="stylesheet">
         <link rel="stylesheet" href="{% static 'css/searchengine.css' %}">
         <script type="text/javascript" src="{% static 'js/searchengine.js' %}"></script> 
         <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto">
@@ -29,7 +30,7 @@
             </div>
         {% else %}
             <a href="{% url 'login' %}" class="top-menu">
-                <span class="glyphicon glyphicon-lock" title="login/signup for more functionalities"></span></a>
+                <p class="glyphicon glyphicon-lock" title="login/signup for more functionalities"></p></a>
         {% endif %}
         <!-- Place this tag where you want the button to render. -->
         <div class="menu-bar">
@@ -41,6 +42,7 @@
         </div>
     </div>
         <h1><a href="/">Airport.bio</a></h1>
+        <span>First class ticket to any biological database in the world</span>
     </div> 
     {% if show_image %}
         <img id="header_image" src="{% static 'img/airport-logo.jpg' %}">
@@ -53,6 +55,8 @@
             </div>
         </div>
     </div>
+    <br>
+    <br>
     </body>
     <script type="text/javascript">
         $("#id_word").keyup(function(event) {
