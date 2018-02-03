@@ -4,7 +4,7 @@
 }
 
 .deselect-all{
-    margin-left: 250px;
+    margin-left: 130px;
     font-family: 'Spectral', serif;
 }
 
@@ -12,7 +12,6 @@
 .select-all{
     font-family: 'Spectral', serif;
     margin-left: 50px;
-    margin-bottom: -20px;
 }
 
 .ms-container:after{
