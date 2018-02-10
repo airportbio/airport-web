@@ -28,9 +28,9 @@ LOGIN_REDIRECT_URL = '/'
 SECRET_KEY = 'ii#y660j9opgmhlwbb)q&frtr&p!czvw_(-e*2zg!-6h!%@^li'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ["127.0.0.1"]
+ALLOWED_HOSTS = []
 
 CSRF_USE_SESSIONS = True
 # Application definition
@@ -92,7 +92,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'airport',
         'USER': 'kasra',
-        'PASSWORD': 'mazdak88',
+        'PASSWORD': 'airport88',
         'HOST': 'localhost',
         'PORT': '',
     }
