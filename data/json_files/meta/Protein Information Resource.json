@@ -1,0 +1,346 @@
+{
+    "/pir_databases/pirsf/data": [
+        "pirsf_full_validated_oo.readme",
+        "pirsfinfo.readme"
+    ],
+    "/pir_databases/other_databases/others": [
+        "iproclass.readme",
+        "nfrefs.readme"
+    ],
+    "/databases/ontology/pro_obo/old_files/release_16.0": [
+        "/databases/ontology/pro_obo/pro_readme.txt",
+        "pro_readme.txt"
+    ],
+    "/databases/ontology/pro_obo/old_files/release_32.0": [
+        "/databases/ontology/pro_obo/pro_readme.txt",
+        "pro_readme.txt"
+    ],
+    "/databases/ontology/pro_obo/old_files/release_13.0": [
+        "/databases/ontology/pro_obo/pro_readme.txt",
+        "pro_readme.txt"
+    ],
+    "/databases/ontology/pro_obo/old_files/release_27.0": [
+        "/databases/ontology/pro_obo/pro_readme.txt",
+        "pro_readme.txt"
+    ],
+    "/pir_databases/psd/nbrf": [
+        "0readme"
+    ],
+    "/databases/ontology/pro_obo/old_files/release_26.0": [
+        "/databases/ontology/pro_obo/pro_readme.txt",
+        "pro_readme.txt"
+    ],
+    "/pir_databases/pirsf/interpro/new/11_01_18": [
+        "/pir_databases/pirsf/interpro/new/readme.txt",
+        "readme.txt"
+    ],
+    "/databases/ontology/pro_obo/old_files/release_41.0": [
+        "/databases/ontology/pro_obo/pro_readme.txt",
+        "pro_readme.txt"
+    ],
+    "/pir_databases/pirsf/interpro/new/11_12_13": [
+        "/pir_databases/pirsf/interpro/new/readme.txt",
+        "readme.txt"
+    ],
+    "/pir_databases/psd/mysql/release79.00": [
+        "/pir_databases/psd/mysql/0readme.txt",
+        "0readme.txt"
+    ],
+    "/databases/ontology/pro_obo": [
+        "pro_readme.txt"
+    ],
+    "/pir_databases/pirsf/interpro/04_04_23": [
+        "readme.txt"
+    ],
+    "/databases/ontology/pro_obo/old_files/release_22.0": [
+        "/databases/ontology/pro_obo/pro_readme.txt",
+        "pro_readme.txt"
+    ],
+    "/pir_databases/pirsf/interpro/new/11_07_26": [
+        "/pir_databases/pirsf/interpro/new/readme.txt",
+        "readme.txt"
+    ],
+    "/databases/ontology/pro_obo/old_files/old_format": [
+        "/databases/ontology/pro_obo/pro_readme.txt",
+        "pro_readme.txt"
+    ],
+    "/pir_databases/pirsf/interpro/new/10_03_18": [
+        "/pir_databases/pirsf/interpro/new/readme.txt",
+        "readme.txt"
+    ],
+    "/pir_databases/pirsf/interpro/new/12_02_26": [
+        "/pir_databases/pirsf/interpro/new/readme.txt",
+        "readme.txt"
+    ],
+    "/databases/ontology/pro_obo/old_files/release_12.0": [
+        "/databases/ontology/pro_obo/pro_readme.txt",
+        "pro_readme.txt"
+    ],
+    "/pir_databases/pirsf/interpro/new/12_04_23": [
+        "/pir_databases/pirsf/interpro/new/readme.txt",
+        "readme.txt"
+    ],
+    "/pir_databases/pirsf/interpro/04_10_24": [
+        "readme.txt"
+    ],
+    "/pir_databases/pirsf/interpro/new/13_06_19": [
+        "/pir_databases/pirsf/interpro/new/readme.txt",
+        "readme.txt"
+    ],
+    "/databases/ontology/pro_obo/old_files/release_33.0": [
+        "/databases/ontology/pro_obo/pro_readme.txt",
+        "pro_readme.txt"
+    ],
+    "/pir/programs/compress": [
+        "readme.txt"
+    ],
+    "/pir_databases/pirsf/interpro/new/11_05_23": [
+        "/pir_databases/pirsf/interpro/new/readme.txt",
+        "readme.txt"
+    ],
+    "/databases/iproclass": [
+        "iproclass.tb.readme"
+    ],
+    "/databases/ontology/pro_obo/old_files/release_15.0": [
+        "/databases/ontology/pro_obo/pro_readme.txt",
+        "pro_readme.txt"
+    ],
+    "/databases/ontology/pro_obo/old_files/release_35.0": [
+        "/databases/ontology/pro_obo/pro_readme.txt",
+        "pro_readme.txt"
+    ],
+    "/databases/ontology/pro_obo/old_files/release_17.0": [
+        "/databases/ontology/pro_obo/pro_readme.txt",
+        "pro_readme.txt"
+    ],
+    "/databases/ontology/pro_obo/old_files/release_18.0": [
+        "/databases/ontology/pro_obo/pro_readme.txt",
+        "pro_readme.txt"
+    ],
+    "/databases/ontology/pro_obo/old_files/release_1.1": [
+        "/databases/ontology/pro_obo/pro_readme.txt",
+        "pro_readme.txt"
+    ],
+    "/pir_databases/nref": [
+        "0readme"
+    ],
+    "/pir_databases/pirsf/interpro/new/12_11_21": [
+        "/pir_databases/pirsf/interpro/new/readme.txt",
+        "readme.txt"
+    ],
+    "/databases/ontology/pro_obo/old_files/release_42.0": [
+        "/databases/ontology/pro_obo/pro_readme.txt",
+        "pro_readme.txt"
+    ],
+    "/databases/ontology/pro_obo/old_files/release_29.0": [
+        "/databases/ontology/pro_obo/pro_readme.txt",
+        "pro_readme.txt"
+    ],
+    "/pir_databases/pirsf/interpro/new/11_10_14": [
+        "/pir_databases/pirsf/interpro/new/readme.txt",
+        "readme.txt"
+    ],
+    "/databases/ontology/pro_obo/old_files/release_24.0": [
+        "/databases/ontology/pro_obo/pro_readme.txt",
+        "pro_readme.txt"
+    ],
+    "/databases/ontology/pro_obo/old_files/release_4.0.2": [
+        "/databases/ontology/pro_obo/pro_readme.txt",
+        "pro_readme.txt"
+    ],
+    "/databases/ontology/pro_obo/old_files/release_14.0": [
+        "/databases/ontology/pro_obo/pro_readme.txt",
+        "pro_readme.txt"
+    ],
+    "/databases/ontology/pro_obo/old_files/release_40.0": [
+        "/databases/ontology/pro_obo/pro_readme.txt",
+        "pro_readme.txt"
+    ],
+    "/databases/ontology/pro_obo/old_files/release_19.0": [
+        "/databases/ontology/pro_obo/pro_readme.txt",
+        "pro_readme.txt"
+    ],
+    "/databases/ontology/pro_obo/old_files/release_36.0": [
+        "/databases/ontology/pro_obo/pro_readme.txt",
+        "pro_readme.txt"
+    ],
+    "/pir_databases/pirsf/interpro/new/10_01_07": [
+        "/pir_databases/pirsf/interpro/new/readme.txt",
+        "readme.txt"
+    ],
+    "/databases/ontology/pro_obo/old_files/release_15.1": [
+        "/databases/ontology/pro_obo/pro_readme.txt",
+        "pro_readme.txt"
+    ],
+    "/databases/ontology/pro_obo/old_files/release_11.0": [
+        "/databases/ontology/pro_obo/pro_readme.txt",
+        "pro_readme.txt"
+    ],
+    "/pir_databases/pirsf/data/new/4-17-08": [
+        "/pir_databases/pirsf/data/new/pirsf_expert_assertions.readme",
+        "/pir_databases/pirsf/data/pirsf_full_validated_oo.readme",
+        "/pir_databases/pirsf/data/pirsfinfo.readme",
+        "pirsf_expert_assertions.readme"
+    ],
+    "/databases/ontology/pro_obo/old_files/release_21.0": [
+        "/databases/ontology/pro_obo/pro_readme.txt",
+        "pro_readme.txt"
+    ],
+    "/pir_databases/pirsf/interpro/new/hmm3/14_04_07": [
+        "/pir_databases/pirsf/interpro/new/readme.txt",
+        "readme.txt"
+    ],
+    "/databases/ontology/pro_obo/old_files/release_40.1": [
+        "/databases/ontology/pro_obo/pro_readme.txt",
+        "pro_readme.txt"
+    ],
+    "/databases/ontology/pro_obo/old_files/release_4.0": [
+        "/databases/ontology/pro_obo/pro_readme.txt",
+        "pro_readme.txt"
+    ],
+    "/databases/ontology/pro_obo/old_files/release_31.0": [
+        "/databases/ontology/pro_obo/pro_readme.txt",
+        "pro_readme.txt"
+    ],
+    "/databases/ontology/pro_obo/old_files/release_2.1": [
+        "/databases/ontology/pro_obo/pro_readme.txt",
+        "pro_readme.txt"
+    ],
+    "/databases/ontology/pro_obo/old_files/release_10.0": [
+        "/databases/ontology/pro_obo/pro_readme.txt",
+        "pro_readme.txt"
+    ],
+    "/databases/idmapping/isoform": [
+        "/databases/idmapping/idmapping.tb.readme",
+        "readme.txt"
+    ],
+    "/pir_databases/pirsf/interpro/new/10_10_05": [
+        "/pir_databases/pirsf/interpro/new/readme.txt",
+        "readme.txt"
+    ],
+    "/databases/ontology/pro_obo/old_files/release_30.0": [
+        "/databases/ontology/pro_obo/pro_readme.txt",
+        "pro_readme.txt"
+    ],
+    "/pir_databases/iproclass": [
+        "0readme.txt",
+        "iproclass.tb.readme"
+    ],
+    "/databases/ontology/pro_obo/old_files/release_37.0": [
+        "/databases/ontology/pro_obo/pro_readme.txt",
+        "pro_readme.txt"
+    ],
+    "/databases/idmapping": [
+        "idmapping.tb.readme"
+    ],
+    "/databases/ontology/pro_obo/old_files/release_25.0": [
+        "/databases/ontology/pro_obo/pro_readme.txt",
+        "pro_readme.txt"
+    ],
+    "/databases/idmapping/add_bibl_info": [
+        "/databases/idmapping/idmapping.tb.readme",
+        "readme.txt"
+    ],
+    "/pir_databases/pirsf/interpro/05_04_27": [
+        "readme.txt"
+    ],
+    "/databases/ontology/pro_obo/old_files/release_34.0": [
+        "/databases/ontology/pro_obo/pro_readme.txt",
+        "pro_readme.txt"
+    ],
+    "/pir_databases/pirsf/data/new": [
+        "/pir_databases/pirsf/data/pirsf_full_validated_oo.readme",
+        "/pir_databases/pirsf/data/pirsfinfo.readme",
+        "pirsf_expert_assertions.readme"
+    ],
+    "/pir_databases/other_databases/piraln": [
+        "0readme"
+    ],
+    "/databases/iptmnet": [
+        "readme.txt"
+    ],
+    "/pir_databases/iproclass/dmpfiles": [
+        "/pir_databases/iproclass/0readme.txt",
+        "/pir_databases/iproclass/iproclass.tb.readme",
+        "iproclass.readme"
+    ],
+    "/pir_databases/psd/mysql": [
+        "0readme.txt"
+    ],
+    "/databases/ontology/pro_obo/old_files/release_20.0": [
+        "/databases/ontology/pro_obo/pro_readme.txt",
+        "pro_readme.txt"
+    ],
+    "/pir/databases/piraln": [
+        "0readme"
+    ],
+    "/databases/ontology/pro_obo/old_files/release_39.0": [
+        "/databases/ontology/pro_obo/pro_readme.txt",
+        "pro_readme.txt"
+    ],
+    "/pir_databases/pirsf/interpro/new/12_06_18": [
+        "/pir_databases/pirsf/interpro/new/readme.txt",
+        "readme.txt"
+    ],
+    "/databases/ontology/pro_obo/old_files/release_3.0": [
+        "/databases/ontology/pro_obo/pro_readme.txt",
+        "pro_readme.txt"
+    ],
+    "/pir/databases/pir_updates": [
+        "0readme"
+    ],
+    "/databases/ontology/pro_obo/old_files/release_28.0": [
+        "/databases/ontology/pro_obo/pro_readme.txt",
+        "pro_readme.txt"
+    ],
+    "/pir_databases/psd/fasta": [
+        "0readme"
+    ],
+    "/databases/ontology/pro_obo/old_files/release_6.0": [
+        "/databases/ontology/pro_obo/pro_readme.txt",
+        "pro_readme.txt"
+    ],
+    "/pir_databases/pirsf/interpro/06_01_31": [
+        "readme.txt"
+    ],
+    "/pir_databases/pirsf/interpro/new/12_08_09": [
+        "/pir_databases/pirsf/interpro/new/readme.txt",
+        "readme.txt"
+    ],
+    "/databases/ontology/pro_obo/old_files/release_47": [
+        "/databases/ontology/pro_obo/pro_readme.txt",
+        "pro_readme.txt"
+    ],
+    "/databases/ontology/pro_obo/old_files/release_43.0": [
+        "/databases/ontology/pro_obo/pro_readme.txt",
+        "pro_readme.txt"
+    ],
+    "/pir_databases/psd/codata": [
+        "0readme"
+    ],
+    "/pir_databases/pirsf/interpro/new": [
+        "readme.txt"
+    ],
+    "/pir/databases/pir_xml": [
+        "0readme"
+    ],
+    "/pir_databases/pirsf/interpro/04_11_08": [
+        "readme.txt"
+    ],
+    "/databases/ontology/pro_obo/old_files/release_38.0": [
+        "/databases/ontology/pro_obo/pro_readme.txt",
+        "pro_readme.txt"
+    ],
+    "/databases/ontology/pro_obo/old_files/release_46.0": [
+        "/databases/ontology/pro_obo/pro_readme.txt",
+        "pro_readme.txt"
+    ],
+    "/databases/ontology/pro_obo/old_files/release_2.0": [
+        "/databases/ontology/pro_obo/pro_readme.txt",
+        "pro_readme.txt"
+    ],
+    "/databases/ontology/pro_obo/old_files/release_23.0": [
+        "/databases/ontology/pro_obo/pro_readme.txt",
+        "pro_readme.txt"
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "/flybase/allied-data/ucla.genemap": [
+        "genedraw.readme",
+        "ucla-genedraw.readme"
+    ],
+    "/flybase-data/allied-data/movies": [
+        "DIC-2photon.readme",
+        "embryogenesis-movie-ji-etal.readme"
+    ],
+    "/genomes/aaa/transposable_elements/ReAS": [
+        "00readme.txt.gz"
+    ],
+    "/flybase/maps": [
+        "chromosome_maps.readme"
+    ]
+}

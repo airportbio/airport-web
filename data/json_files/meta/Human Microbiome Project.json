@@ -1,0 +1,14 @@
+{
+    "/HMMCP/finalData": [
+        "/HMMCP/hq.readme",
+        "/HMMCP/lq.readme",
+        "readme.txt.bz2"
+    ],
+    "/HMMCP": [
+        "hq.readme",
+        "lq.readme"
+    ],
+    "/HMHASM/Hybrid_scaffold_JCVI_annotation_output": [
+        "readme_jcvi_functional_annotation_output.doc"
+    ]
+}
