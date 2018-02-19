@@ -8,8 +8,9 @@ from django.template import Context, Template, RequestContext
 from django.views.decorators.csrf import csrf_exempt
 from django.core.cache import cache
 from django.conf import settings
+from django.db.models import Q
 from SearchEngine.lib.utils import FindSearchResult, Paginator
-from .models import SearchQuery, Recommendation, ServerName, SuggestedServers
+from .models import SearchQuery, Recommendation, ServerName, SuggestedServers, Path
 from .forms import SearchForm, SuggestServer, CaptchaUserCreateForm
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.views import login as authlogin
@@ -183,6 +184,19 @@ def recom_redirect(request, keyword):
                    'selected_len': True,
                    'show_image': False,
                    'is_other_pages':all_result.has_other_pages()})
+
+
+def meta_links(request, server_name, path_id):
+    path_obj = Path.objects.get(id__exact=path_id)
+    server_obj = ServerName.objects.get(name__exact=server_name)
+    return render(request, 
+                  'SearchEngine/meta_links.html',
+                  {'links': path_obj.meta_path,
+                   'server_url': server_obj.path,
+                   'path': path_obj.path,
+                   'servername': server_name,
+                   'user': request.user,})
+
 @csrf_exempt
 def search(request):
     search_form = SearchForm()
