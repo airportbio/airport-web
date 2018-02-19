@@ -70,14 +70,17 @@ class FindSearchResult:
             for obj in Path.objects.filter(server_name=name):
                 if all_words.intersection(obj.keywords):
                     yield {'path': obj.path,
+                           'meta_links': obj.meta_path,
                            'metadata': obj.metadata,
                            'name': name,
+                           'path_id': obj.id,
                            'url': url,
-                           'exact_match': exact_only_flag or self.exact_match(obj.files, obj.path)}
+                           'exact_match': exact_only_flag or self.exact_match(obj.keywords)}
 
     
-    def exact_match(self, files, path):
-        return any((i in files) or (i in path) for i in self.splitted_substrings)
+    def exact_match(self, keywords):
+        return bool(set(self.splitted_substrings).intersection(keywords))
+        # return any((i in files) or (i in path) for i in self.splitted_substrings)
     
     def check_intersection(self, files_and_keywords, path, all_words):
         # this should be done in json files
