@@ -29,5 +29,8 @@ urlpatterns = [
     url(r'^$', myviews.home, name='home'),
     url(r'^admin/', admin.site.urls),
     url(r'^suggest_server/.*$', myviews.suggest_server, name='suggest_server'),
+    url(r'^metalinks/(?P<server_name>.+)/(?P<path_id>.+)/$',
+        myviews.meta_links,
+        name='meta_links'),
     url(r'^result/(?P<keyword>.+)/$', myviews.recom_redirect, name='recom_redirect'),
 ]
