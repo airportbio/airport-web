@@ -37,6 +37,7 @@ class Path(models.Model):
     keywords = ArrayField(models.CharField(max_length=100))
     server_name = models.CharField(max_length=50)
     metadata = models.CharField(max_length=200)
+    meta_path = ArrayField(models.TextField(), null=True)
 
     def __str__(self):
         return self.path
