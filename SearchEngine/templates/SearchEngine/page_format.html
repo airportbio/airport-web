@@ -15,6 +15,7 @@
         <th>Exact match</th>
         <th>Server name</th>
         <th>Search for metadata</th>
+        <th>Founded metadata</th>
       </tr>
     </thead>
     <tbody>
@@ -22,14 +23,19 @@
         <tr>
           {% if record.exact_match %}
               <td><a href= 'ftp://{{ record.url }}{{ record.path }}' 
-            target="_blank" style="color:#008211">{{ record.path }}</a></td>
+            target="_blank" style="color:#008211" title="{{ record.path}}">{{ record.path|truncatechars:30 }}</a></td>
           {% else %}
               <td><a href= 'ftp://{{ record.url }}{{ record.path }}' 
-            target="_blank">{{ record.path }}</a></td>
+            target="_blank" title="{{ record.path}}">{{ record.path|truncatechars:30 }}</a></td>
           {% endif %}
-          <td>{{ record.exact_match }}</td>
-          <td>{{ record.name }}</td>
-          <td><a href= "{{record.metadata}}" target="_blank">{{record.metadata}}</a></td>
+            <td>{{ record.exact_match }}</td>
+            <td>{{ record.name }}</td>
+            <td><a href= "{{record.metadata}}" target="_blank">{{record.metadata}}</a></td>
+          {% if record.meta_links|length %}
+              <td><a href= "{% url 'meta_links' server_name=record.name path_id=record.path_id %}" target="_blank">{{ record.meta_links|length }} files</a></td>
+          {% else %}
+              <td> --- </td>
+          {% endif %}
         </tr>
       {% endfor %}
     </tbody>
