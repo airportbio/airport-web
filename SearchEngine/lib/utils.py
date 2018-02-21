@@ -8,9 +8,12 @@ from string import punctuation, whitespace
 from collections import defaultdict
 # from django.contrib.postgres.search import TrigramSimilarity, TrigramDistance
 import re
+from SearchEngine.lib.custom_exceptions import NoResultException
 syspath.append(ospath.join(ospath.expanduser("~"), 'airport-web'))
 from SearchEngine.models import Server, WordNet, Path, Recommendation
-from itertools import count, tee
+from itertools import count, tee, chain
+import asyncio
+
 
 class FindSearchResult:
     def __init__(self, *args, **kwargs):
@@ -19,6 +22,7 @@ class FindSearchResult:
         self.user = kwargs['user']
         self.exact_only = kwargs['exact_only']
         self.splitted_substrings = []
+        self.all_servers_count = Server.objects.count()
 
     def add_recommendations(self, words):
         obj, _ = Recommendation.objects.get_or_create(
@@ -65,27 +69,24 @@ class FindSearchResult:
         except TypeError:
             # user is anonymouse
             pass
-        from multiprocessing.dummy import Pool as ThreadPool
-        from itertools import chain
-        pool = ThreadPool()
-        args = (all_words, exact_only_flag)
-        result = pool.map(self.traverse_table, [args + item for item in self.selected_servers.items()])
-        pool.close()
-        return chain.from_iterable(result)
-    
-    def traverse_table(self, item):
-        all_words, exact_only_flag, name, url = item
-        
-        return [{'path': obj.path,
-                'meta_links': obj.meta_path,
-                'metadata': obj.metadata,
-                'name': name,
-                'path_id': obj.id,
-                'url': url,
-                'exact_match': exact_only_flag or self.exact_match(obj.files, obj.path)}
-                for obj in Path.objects.filter(server_name=name)
-                if all_words.intersection(obj.keywords)
-                ]
+        # from multiprocessing.dummy import Pool as ThreadPool
+        #pool = ThreadPool()
+        #args = (all_words, exact_only_flag)
+        #result = pool.map(self.traverse_table, [args + item for item in self.selected_servers.items()])
+        #pool.close()
+        #return chain.from_iterable(result)
+        all_words = {i.lower() for i in all_words}
+        for name, url in self.selected_servers.items():
+            for obj in Path.objects.filter(server_name=name):
+                if all_words.intersection(obj.keywords):
+                    yield {'path': obj.path,
+                            'meta_links': obj.meta_path,
+                            'metadata': obj.metadata,
+                            'name': name,
+                            'path_id': obj.id,
+                            'url': url,
+                            'exact_match': exact_only_flag or self.exact_match(obj.files, obj.path)}
+
 
     def exact_match(self, files, path):
         # return bool(set(self.splitted_substrings).intersection(keywords))
@@ -112,10 +113,14 @@ class Paginator:
         self.counter = count(1)
         self.cache = {}
         self.current = self.create_page()
+    
     def create_page(self, number=False):
         if not number:
             number = next(self.counter)
+        # should use deque with max_len == self.row_number
         items = [next(self.results, None) for _ in range(self.rows_number)]
+        if all(i is None for i in items):
+            raise NoResultException("Sorry cound't find any match for this keyword.")
         page = Page(items=items,
                     number=number,
                     range_frame=self.range_frame)
