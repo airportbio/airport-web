@@ -1,8 +1,9 @@
 {% extends 'SearchEngine/base.html' %}
 {% block content %}
 
-<h2> Readme files for path: {{ path }}</h2>
-
+<h2> Descriptions for path: <font color="green">{{ path }}</font></h2>
+<h3> Server: <font color="red"> {{server_name}} </font></h3>
+<br>
 {% for link in links %}
     <li><a href="ftp://{{ server_url }}{{ link }}" target="_blank"> {{ link }} </a></li>
 {% endfor %}
