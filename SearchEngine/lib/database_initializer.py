@@ -21,7 +21,7 @@ class Initializer:
         self.metadata_links = self.load_metadata(kwargs['metadata'])
         self.server_names = self.load_server_names()
         self.punc_regex = re.compile(r'[{}]'.format(re.escape(punctuation)))
-        self. meta_path = kwargs['meta_path']
+        self.meta_path = kwargs['meta_path']
         self.metapath_dict = self.get_meta_path()
 
 
