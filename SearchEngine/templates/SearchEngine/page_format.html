@@ -1,12 +1,11 @@
 {% extends 'SearchEngine/base.html' %}
 {% block content %}
 <!--<p> <b>{{ founded_results }} results founded</b> </p>-->
-{% if error %}
-<p style="color:red"> <b> {{ error }}</b></p>
-{% else %}
-{% if not selected_len %}
- <p style="color:red"> <b> Please select at least one database from the list! {{ selected_len }}</b> </p>
 
+{% if not selected_len %}
+<p style="color:red"> <b> Please select at least one database from the list! {{ selected_len }}</b> </p>
+{% elif error %}
+<p style="color:red"> <b> {{ error }}</b></p>
 {% else %}
 <table class="table table-bordered">
     <thead>
@@ -66,6 +65,5 @@
       {% endif %}
     </ul>
   {% endif %}
-{% endif %}
 {% endif %}
   {% endblock %}
