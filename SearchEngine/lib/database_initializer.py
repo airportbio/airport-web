@@ -60,7 +60,7 @@ class Initializer:
             path = Path()
             path.path = d['path']
             path.files = d['files']
-            path.keywords = d['keywords']
+            path.keywords = [i.lower() for i in d['keywords']]
             path.metadata = self.metadata_links[name]
             path.meta_path = meta.get(d['path'], [])
             path.server_name = name
