@@ -137,14 +137,15 @@ def search_result(request, page=1):
         except NoResultException as exc:
             error = exc
 
+        selected_length = len(selected)
         if error:
             html = render_to_string('SearchEngine/page_format.html',
                                     {'error': error,
+                                    'selected_len': selected_length,
                                     'founded_results': 'X',
                                     'user': request.user,
                                     'show_image': False,})
         else:
-            selected_length = len(selected)
             html = render_to_string('SearchEngine/page_format.html',
                                     {'all_results': all_result,
                                     'page': all_result[1],
