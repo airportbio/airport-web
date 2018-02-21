@@ -65,22 +65,31 @@ class FindSearchResult:
         except TypeError:
             # user is anonymouse
             pass
-
-        for name, url in self.selected_servers.items(): 
-            for obj in Path.objects.filter(server_name=name):
-                if all_words.intersection(obj.keywords):
-                    yield {'path': obj.path,
-                           'meta_links': obj.meta_path,
-                           'metadata': obj.metadata,
-                           'name': name,
-                           'path_id': obj.id,
-                           'url': url,
-                           'exact_match': exact_only_flag or self.exact_match(obj.keywords)}
-
+        from multiprocessing.dummy import Pool as ThreadPool
+        from itertools import chain
+        pool = ThreadPool()
+        args = (all_words, exact_only_flag)
+        result = pool.map(self.traverse_table, [args + item for item in self.selected_servers.items()])
+        pool.close()
+        return chain.from_iterable(result)
     
-    def exact_match(self, keywords):
-        return bool(set(self.splitted_substrings).intersection(keywords))
-        # return any((i in files) or (i in path) for i in self.splitted_substrings)
+    def traverse_table(self, item):
+        all_words, exact_only_flag, name, url = item
+        
+        return [{'path': obj.path,
+                'meta_links': obj.meta_path,
+                'metadata': obj.metadata,
+                'name': name,
+                'path_id': obj.id,
+                'url': url,
+                'exact_match': exact_only_flag or self.exact_match(obj.files, obj.path)}
+                for obj in Path.objects.filter(server_name=name)
+                if all_words.intersection(obj.keywords)
+                ]
+
+    def exact_match(self, files, path):
+        # return bool(set(self.splitted_substrings).intersection(keywords))
+        return any((i in files) or (i in path) for i in self.splitted_substrings)
     
     def check_intersection(self, files_and_keywords, path, all_words):
         # this should be done in json files
@@ -103,7 +112,6 @@ class Paginator:
         self.counter = count(1)
         self.cache = {}
         self.current = self.create_page()
-
     def create_page(self, number=False):
         if not number:
             number = next(self.counter)
