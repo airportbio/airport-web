@@ -15,11 +15,12 @@
         <th>Exact match</th>
         <th>Server name</th>
         <th>Search for metadata</th>
-        <th>Founded metadata</th>
+        <th>Description</th>
       </tr>
     </thead>
     <tbody>
       {% for record in page %}
+        {% if record is not None %}
         <tr>
           {% if record.exact_match %}
               <td><a href= 'ftp://{{ record.url }}{{ record.path }}' 
@@ -37,6 +38,7 @@
               <td> --- </td>
           {% endif %}
         </tr>
+        {% endif %}
       {% endfor %}
     </tbody>
   </table>
