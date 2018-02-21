@@ -10,6 +10,7 @@ from django.core.cache import cache
 from django.conf import settings
 from django.db.models import Q
 from SearchEngine.lib.utils import FindSearchResult, Paginator
+from SearchEngine.lib.custom_exceptions import NoResultException
 from .models import SearchQuery, Recommendation, ServerName, SuggestedServers, Path
 from .forms import SearchForm, SuggestServer, CaptchaUserCreateForm
 from django.contrib.auth.forms import AuthenticationForm
@@ -127,26 +128,32 @@ def search_result(request, page=1):
             # start_time = datetime.now()
             all_result = Paginator(searcher.find_result(),
                                    range_frame=2,
-                                   rows_number=50)
+                                   rows_number=30)
             # print("execution time -- > {} ".format(datetime.now() - start_time))
         except ValueError as exc:
             # invalid keywords
-            error = """INVALID KEYWORD:
-            Your keyword contains invalid notations!\n
+            error = """INVALID KEYWORD: Your keyword contains invalid notations!\n
             Exception: {}""".format(exc)
-            all_result = Paginator(iter([]),
-                                   range_frame=2,
-                                   rows_number=50)
-        selected_length = len(selected)
-        html = render_to_string('SearchEngine/page_format.html',
-                                {'all_results': all_result,
-                                 'page': all_result[1],
-                                 'error': error,
-                                 'founded_results': 'X',
-                                 'user': request.user,
-                                 'selected_len': selected_length,
-                                 'show_image': False,
-                                 'is_other_pages':all_result.has_other_pages()})
+        except NoResultException as exc:
+            error = exc
+
+        if error:
+            html = render_to_string('SearchEngine/page_format.html',
+                                    {'error': error,
+                                    'founded_results': 'X',
+                                    'user': request.user,
+                                    'show_image': False,})
+        else:
+            selected_length = len(selected)
+            html = render_to_string('SearchEngine/page_format.html',
+                                    {'all_results': all_result,
+                                    'page': all_result[1],
+                                    'error': error,
+                                    'founded_results': 'X',
+                                    'user': request.user,
+                                    'selected_len': selected_length,
+                                    'show_image': False,
+                                    'is_other_pages':all_result.has_other_pages()})
 
         return HttpResponse(json.dumps({'html': html}),
                             content_type="application/json")
@@ -170,10 +177,11 @@ def recom_redirect(request, keyword):
     searcher = FindSearchResult(keyword=keyword,
                                 servers=selected,
                                 user=request.user,
-                                exact_only='false')
+                                exact_only='false')    
     all_result = Paginator(searcher.find_result(),
-                                   range_frame=2,
-                                   rows_number=50)
+                            range_frame=2,
+                            rows_number=30)
+
     return render(request, 
                   'SearchEngine/page_format.html',
                   {'all_results': all_result,
@@ -194,7 +202,7 @@ def meta_links(request, server_name, path_id):
                   {'links': path_obj.meta_path,
                    'server_url': server_obj.path,
                    'path': path_obj.path,
-                   'servername': server_name,
+                   'server_name': server_name,
                    'user': request.user,})
 
 @csrf_exempt
