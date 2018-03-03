@@ -65,7 +65,6 @@ def login(request):
 
 
 def signup_view(request):
-    print("view")
     if request.method == 'POST':
         data = request.POST
         form = CaptchaUserCreateForm(data)
@@ -83,23 +82,6 @@ def signup_view(request):
         form = CaptchaUserCreateForm()
     return render(request, 'registration/signup.html', {'form': form})
 
-
-
-def generate_template(all_result, error, user):
-    t = Template(open('SearchEngine/templates/SearchEngine/page_format.html').read())
-    
-    while True:
-        if not all_result.has_next():
-            print("break")
-            break
-        c = Context(
-        {'all_results': all_result,
-        'error': error,
-        'founded_results': 'X',
-        'user': user,
-        'selected_len': True,
-        'show_image': False,})
-        yield t.render(c)
 
 @csrf_exempt
 def search_result(request, page=1):
