@@ -69,12 +69,6 @@ class FindSearchResult:
         except TypeError:
             # user is anonymouse
             pass
-        # from multiprocessing.dummy import Pool as ThreadPool
-        #pool = ThreadPool()
-        #args = (all_words, exact_only_flag)
-        #result = pool.map(self.traverse_table, [args + item for item in self.selected_servers.items()])
-        #pool.close()
-        #return chain.from_iterable(result)
         all_words = {i.lower() for i in all_words}
         for name, url in self.selected_servers.items():
             for obj in Path.objects.filter(server_name=name):
