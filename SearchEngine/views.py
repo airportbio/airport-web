@@ -9,7 +9,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.core.cache import cache
 from django.conf import settings
 from django.db.models import Q
-from SearchEngine.lib.utils import FindSearchResult, Paginator
+from SearchEngine.lib.utils import FindSearchResult, Paginator, Cache
 from SearchEngine.lib.custom_exceptions import NoResultException
 from .models import SearchQuery, Recommendation, ServerName, SuggestedServers, Path
 from .forms import SearchForm, SuggestServer, CaptchaUserCreateForm
@@ -23,6 +23,7 @@ from datetime import datetime
 import requests
 
 
+CACHE = Cache(20)
 
 def home(request):
     recommendations = Recommendation.objects.all()
@@ -84,7 +85,6 @@ def signup_view(request):
     return render(request, 'registration/signup.html', {'form': form})
 
 
-@lru_cache(None)
 @csrf_exempt
 def search_result(request, page=1):
     global all_result
@@ -93,6 +93,11 @@ def search_result(request, page=1):
     exact_only = request.POST.get('exact_only')
     if keyword is not None:
         selected = json.loads(request.POST.get('selected'))
+        try:
+            return HttpResponse(CACHE[(keyword, len(selected))],
+                                content_type="application/json")
+        except KeyError:
+            pass
         try:
             search_model = SearchQuery()
             search_model.user = request.user
@@ -140,6 +145,9 @@ def search_result(request, page=1):
                                     'show_image': False,
                                     'is_other_pages':all_result.has_other_pages()})
 
+        if len(selected):
+            CACHE[(keyword, len(selected))] = json.dumps({'html': html})
+        print(len(CACHE))
         return HttpResponse(json.dumps({'html': html}),
                             content_type="application/json")
     else:
@@ -157,6 +165,10 @@ def search_result(request, page=1):
 
 @login_required
 def recom_redirect(request, keyword):
+    try:
+        return CACHE[keyword]
+    except KeyError:
+        pass
     servers = ServerName.objects.all()
     selected = {s.name: s.path for s in servers}
     searcher = FindSearchResult(keyword=keyword,
@@ -179,25 +191,26 @@ def recom_redirect(request, keyword):
         error = exc   
 
     if error:
-        return render(request, 
+        render_obj =  render(request, 
                       'SearchEngine/page_format.html',
                         {'error': error,
                         'selected_len': len(selected),
                         'founded_results': 'X',
                         'user': request.user,
                         'show_image': False,})
-
-    return render(request, 
-                  'SearchEngine/page_format.html',
-                  {'all_results': all_result,
-                   'page': all_result[1],
-                   'error': False,
-                   'founded_results': 'X',
-                   'user': request.user,
-                   'selected_len': True,
-                   'show_image': False,
-                   'is_other_pages':all_result.has_other_pages()})
-
+    else:
+        render_obj  = render(request, 
+                    'SearchEngine/page_format.html',
+                    {'all_results': all_result,
+                    'page': all_result[1],
+                    'error': False,
+                    'founded_results': 'X',
+                    'user': request.user,
+                    'selected_len': True,
+                    'show_image': False,
+                    'is_other_pages':all_result.has_other_pages()})
+    CACHE[keyword] = render_obj
+    return render_obj
 
 def meta_links(request, server_name, path_id):
     path_obj = Path.objects.get(id__exact=path_id)
