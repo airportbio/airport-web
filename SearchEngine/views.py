@@ -17,6 +17,7 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.views import login as authlogin
 from itertools import islice
 from collections import Counter
+from functools import lru_cache
 import json
 from datetime import datetime
 import requests
@@ -83,6 +84,7 @@ def signup_view(request):
     return render(request, 'registration/signup.html', {'form': form})
 
 
+@lru_cache(None)
 @csrf_exempt
 def search_result(request, page=1):
     global all_result
@@ -160,10 +162,30 @@ def recom_redirect(request, keyword):
     searcher = FindSearchResult(keyword=keyword,
                                 servers=selected,
                                 user=request.user,
-                                exact_only='false')    
-    all_result = Paginator(searcher.find_result(),
-                            range_frame=2,
-                            rows_number=30)
+                                exact_only='false')
+
+    try:
+        error = False
+        # start_time = datetime.now()
+        all_result = Paginator(searcher.find_result(),
+                                range_frame=2,
+                                rows_number=30)
+        # print("execution time -- > {} ".format(datetime.now() - start_time))
+    except ValueError as exc:
+        # invalid keywords
+        error = """INVALID KEYWORD: Your keyword contains invalid notations!\n
+        Exception: {}""".format(exc)
+    except NoResultException as exc:
+        error = exc   
+
+    if error:
+        return render(request, 
+                      'SearchEngine/page_format.html',
+                        {'error': error,
+                        'selected_len': len(selected),
+                        'founded_results': 'X',
+                        'user': request.user,
+                        'show_image': False,})
 
     return render(request, 
                   'SearchEngine/page_format.html',
