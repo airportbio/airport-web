@@ -5,7 +5,7 @@ from os import path as ospath
 from django.db.models import Q
 # from collections import defaultdict
 from string import punctuation, whitespace
-from collections import defaultdict
+from collections import defaultdict, OrderedDict
 # from django.contrib.postgres.search import TrigramSimilarity, TrigramDistance
 import re
 from SearchEngine.lib.custom_exceptions import NoResultException
@@ -192,3 +192,14 @@ class Page:
         # detect wheter there are any upper pages or not 
         upper = lower + (2*self.range_frame + 2)
         return range(lower, upper)
+
+
+class Cache(OrderedDict):
+    def __init__(self, *args, **kwargs):
+        self.lenght = args[0]
+        super(Cache, self).__init__(self, *args[1:], **kwargs)
+
+    def __setitem__(self, key, value):
+        if len(self) == self.lenght:
+            self.popitem(last=False)
+        super().__setitem__(key, value)
