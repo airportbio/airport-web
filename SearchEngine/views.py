@@ -87,6 +87,7 @@ def signup_view(request):
 
 @csrf_exempt
 def search_result(request, page=1):
+    # print("callview", page)
     global all_result
     global selected_length
     keyword = request.POST.get('keyword')
@@ -151,7 +152,8 @@ def search_result(request, page=1):
         return HttpResponse(json.dumps({'html': html}),
                             content_type="application/json")
     else:
-        page = int(request.GET.get('page', 1))
+        if page != 1:
+            page = int(page)
         return render(request, 
                       'SearchEngine/page_format.html',
                        {'all_results': all_result,
