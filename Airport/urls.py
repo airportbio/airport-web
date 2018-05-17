@@ -33,4 +33,5 @@ urlpatterns = [
         myviews.meta_links,
         name='meta_links'),
     url(r'^result/(?P<keyword>.+)/$', myviews.recom_redirect, name='recom_redirect'),
+    url(r'^page/(?P<page>.*)/$', myviews.search_result, name="page"),
 ]
