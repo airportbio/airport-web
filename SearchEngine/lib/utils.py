@@ -117,7 +117,8 @@ class Paginator:
             raise NoResultException("Sorry cound't find any match for this keyword.")
         page = Page(items=items,
                     number=number,
-                    range_frame=self.range_frame)
+                    range_frame=self.range_frame,
+                    row_number=self.rows_number)
         self.cache[number] = page
         return page
     
@@ -148,7 +149,11 @@ class Paginator:
 
     def has_other_pages(self):
         try:
-            return self.current.last_item is not None
+            # has next pages
+            cond1 = self.current.last_item is not None
+            # has previous pages
+            cond2 = self.current.number > 1
+            return cond1 or cond2
         except IndexError:
             return True
 
@@ -157,11 +162,15 @@ class Paginator:
 class Page:
     def __init__(self, *args, **kwargs):
         self.number = kwargs['number']
+        self.row_number = kwargs['row_number']
         self.range_frame = kwargs['range_frame']
         self.items = kwargs['items']
         self.last_item = self.items[-1]
-        self.previous_page_number = self.number - self.range_frame
-        self.next_page_number = self.number + self.range_frame
+        self.previous_page_number = max(1, self.number - (self.range_frame + 1))
+        # Since the paginator is an iterator we can't use a next_page number
+        # unless, always retrive pages within frame range. Actually one more
+        # and one less than frame range.    
+        # self.next_page_number = self.number + self.range_frame
         self.index = 0
 
     def __next__(self):
@@ -189,8 +198,11 @@ class Page:
         lower = max(self.number - self.range_frame, 1)
         # for a more precise result we should always cache
         # pages within the range_frame so that we can easily
-        # detect wheter there are any upper pages or not 
-        upper = lower + (2*self.range_frame + 2)
+        # detect wheter there are any upper pages or not
+        if self.last_item is None:
+            upper = self.number + 1
+        else:
+            upper = lower + (2*self.range_frame + 2)
         return range(lower, upper)
 
 
