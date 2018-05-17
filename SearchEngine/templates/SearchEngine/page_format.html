@@ -45,8 +45,8 @@
   {% if is_other_pages %}
     <ul class="pagination">
       {% if page.has_previous %}
-        <li><a href="/search_result/?page={{ page.previous_page_number }}"
-          onclick="return chagne_page()" id="change_page_id">&laquo;</a></li>
+        <li><a href="{% url 'page' page=page.previous_page_number %}"
+          id="change_page_id">&laquo;</a></li>
       {% else %}
         <li class="disabled"><span>&laquo;</span></li>
       {% endif %}
@@ -54,15 +54,15 @@
         {% if page.number == i %}
           <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
         {% else %}
-          <li><a href="/search_result/?page={{ i }}" onclick="return chagne_page()" id="change_page_id">{{ i }}</a></li>
+          <li><a href="{% url 'page' page=i %}">{{ i }}</a></li>
         {% endif %}
       {% endfor %}
-      {% if page.has_next %}
-        <li><a href="/search_result/?page={{ page.next_page_number }}"
+      <!--{% if page.has_next %}
+        <li><a href="{% url 'page' page=page.next_page_number %}"
           onclick="return chagne_page()" id="change_page_id">&raquo;</a></li>
-      {% else %}
+      {% else %}-->
         <li class="disabled"><span>&raquo;</span></li>
-      {% endif %}
+      <!--{% endif %}-->
     </ul>
   {% endif %}
 {% endif %}
