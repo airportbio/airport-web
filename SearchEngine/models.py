@@ -16,6 +16,7 @@ class SearchQuery(models.Model):
         self.word = kwargs['word']
         self.servers = kwargs['servers']
         self.exact_only = kwargs['exact_only']
+        self.user = kwargs['user']
         self.save()
 
     def __str__(self):
